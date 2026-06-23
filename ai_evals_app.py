@@ -16,19 +16,11 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Color of the interactive slider handle */
+/* Color of the interactive slider handle (thumb) */
 div[data-baseweb="slider"] [role="slider"] {
   background-color: #2563eb !important;
-}
-
-/* Color of the base track line (right side of the handle) */
-div[data-baseweb="slider"] > div {
-  background: #2563eb !important;
-}
-
-/* Color of the active track line (left side of the handle) */
-div[data-baseweb="slider"] > div > div {
-  background: #cbd5e1 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
   /* Task 5: Spacing - Add more padding on left and right side (around 3% more than default) */
@@ -175,6 +167,35 @@ div[data-baseweb="slider"] > div > div {
     display: block !important;
   }
 </style>
+
+<script>
+(function() {
+  const replaceColors = () => {
+    // Find all sub-div elements inside the slider track components
+    const elements = document.querySelectorAll('div[data-baseweb="slider"] div');
+    elements.forEach(el => {
+      if (el.style && el.style.background) {
+        const bg = el.style.background;
+        // Parse the dynamic linear-gradient to identify the active track color (always mapped next to 0%)
+        const match = bg.match(/(rgba?\(.*?\\))\\s+0%/);
+        if (match) {
+          const activeColor = match[1];
+          // Intercept and replace the track color with our premium royal blue theme
+          if (activeColor !== 'rgb(37, 99, 235)' && activeColor !== '#2563eb') {
+            el.style.background = bg.replaceAll(activeColor, 'rgb(37, 99, 235)');
+          }
+        }
+      }
+    });
+  };
+
+  // Run on first load and set up a MutationObserver to listen for Streamlit rendering runs
+  const observer = new MutationObserver(replaceColors);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+  
+  replaceColors();
+})();
+</script>
 """, unsafe_allow_html=True)
 
 # Initialize Session States for Playground Presets & Expander Toggles
