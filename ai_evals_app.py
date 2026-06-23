@@ -469,7 +469,7 @@ with col_right:
     with kpi_col1:
         st.markdown(f"""
         <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #2563eb; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
-            <span class="metric-label-black" style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #000000 !important; tracking-wider">Overall Quality Index</span>
+            <span class="metric-label-black" style="display: block; text-transform: uppercase; font-size: 18px; font-weight: 700; color: #000000 !important; tracking-wider">Overall Quality Index</span>
             <span class="metric-value-black" style="display: block; font-size: 28px; font-weight: 800; color: #000000 !important; margin-top: 4px;">{quality_score:.1f}%</span>
             <span style="display: block; font-size: 15px; color: {'#10b981' if quality_score >= 80 else '#ef4444'}; font-weight: 700; margin-top: 8px;">
                 {'● Acceptable' if quality_score >= 80 else '▲ Unsafe Baseline'}
@@ -490,9 +490,9 @@ with col_right:
 
         st.markdown(f"""
         <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #1e293b; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
-            <span class="metric-label-black" style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #000000 !important; tracking-wider">Predicted Churn Risk</span>
+            <span class="metric-label-black" style="display: block; text-transform: uppercase; font-size: 18px; font-weight: 700; color: #000000 !important; tracking-wider">Predicted Churn Risk</span>
             <span class="metric-value-black" style="display: block; font-size: 28px; font-weight: 800; color: #000000 !important; margin-top: 4px;">{churn_risk:.1f}%</span>
-            <span style="display: block; font-size: 11px; color: {churn_color}; font-weight: 700; margin-top: 8px;">
+            <span style="display: block; font-size: 15px; color: {churn_color}; font-weight: 700; margin-top: 8px;">
                 {churn_delta}
             </span>
         </div>
@@ -501,9 +501,9 @@ with col_right:
     with kpi_col3:
         st.markdown(f"""
         <div style="background-color: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b; border-top: 4px solid #10b981; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
-            <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #94a3b8; tracking-wider">Projected Customer CSAT</span>
+            <span style="display: block; text-transform: uppercase; font-size: 18px; font-weight: 700; color: #94a3b8; tracking-wider">Projected Customer CSAT</span>
             <span style="display: block; font-size: 28px; font-weight: 800; color: #10b981; margin-top: 4px;">{projected_csat:.2f} / 5.0</span>
-            <span style="display: block; font-size: 11px; color: #cbd5e1; font-weight: 500; margin-top: 8px;">
+            <span style="display: block; font-size: 15px; color: #cbd5e1; font-weight: 500; margin-top: 8px;">
                 {'Target Met' if projected_csat >= 4.0 else 'Below SLA'}
             </span>
         </div>
