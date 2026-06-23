@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import re
+import textwrap
 import plotly.graph_objects as go
 from datetime import datetime
 
@@ -213,7 +214,7 @@ with col_actions:
 
 # Collapsible Guide (Task 4: Heading is Black)
 if st.session_state.show_guide:
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div style="background-color: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);">
         <h3 style="color: #000000 !important; font-size: 16px; font-weight: 700; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
             <svg style="width: 20px; height: 20px; color: #2563eb;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -251,7 +252,7 @@ if st.session_state.show_guide:
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
 # Main Content Columns (Task 5: 36% Left, 6% Spacer, 58% Right split layout)
 col_left, col_spacer, col_right = st.columns([36, 6, 58])
