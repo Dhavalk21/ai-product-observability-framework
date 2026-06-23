@@ -570,8 +570,8 @@ st.markdown("""
             &copy; 2026 Dhaval Kareliya. All rights reserved.
         </div>
         <div style="display: flex; gap: 24px; font-weight: 600;">
-            <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">LinkedIn</a>
-            <a href="https://github.com/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">GitHub</a>
+            <a href="https://www.linkedin.com/in/dhavalk21/" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">LinkedIn</a>
+            <a href="https://github.com/dhavalk21/" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">GitHub</a>
         </div>
     </div>
 </div>
