@@ -11,17 +11,50 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS to style elements and highlight the active scenario button
+# Custom Premium CSS Injection
 st.markdown("""
 <style>
-  /* Styling custom buttons and tooltips */
-  .stButton > button {
-    transition: all 0.2s ease-in-out;
+  /* Global page resets and font smoothing */
+  .stApp {
+    background-color: #f8fafc;
   }
-  .active-btn {
-    background-color: #4f46e5 !important;
-    color: white !important;
-    border-color: #4338ca !important;
+  
+  /* Custom styled container blocks */
+  .custom-card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+  }
+  
+  /* Accent borders */
+  .accent-indigo { border-top: 4px solid #4f46e5; }
+  .accent-emerald { border-top: 4px solid #10b981; }
+  .accent-slate { border-top: 4px solid #0f172a; }
+
+  /* Interactive button states */
+  .stButton > button {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+  
+  /* Custom tooltips */
+  .tooltip-trigger {
+    color: #4f46e5;
+    cursor: help;
+    font-weight: bold;
+    font-size: 11px;
+    background-color: #f5f3ff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd6fe;
   }
 </style>
 """, unsafe_allow_html=True)
@@ -32,9 +65,9 @@ if 'play_context' not in st.session_state:
 if 'play_query' not in st.session_state:
     st.session_state.play_query = "What is the cost of the silver plan, and what is your refund policy?"
 if 'play_output' not in st.session_state:
-    st.session_state.play_output = "Silver plan cost 10 euro and no refund policy"
+    st.session_state.play_output = "Silver plan cost 10 euro and 10 day return policy"
 if 'active_preset' not in st.session_state:
-    st.session_state.active_preset = "grounded"
+    st.session_state.active_preset = "hallucinated"
 
 # Default Baseline Sliders
 if 'faithfulness' not in st.session_state:
@@ -44,30 +77,34 @@ if 'relevancy' not in st.session_state:
 if 'hallucination' not in st.session_state:
     st.session_state.hallucination = 0
 
-# Header Branding & Badges
+# Widescreen Executive Header Panel (Matching reference style)
 st.markdown("""
-<div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px;">
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px;">
-        <span style="background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #cbd5e1;">
-            AI Product Operations • Quality Assurance Framework
-        </span>
-        <span style="background-color: #e0e7ff; color: #4338ca; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #c7d2fe;">
-            Designed by Dhaval Kareliya | 
-            <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #3730a3; font-weight: bold;">LinkedIn</a> • 
-            <a href="https://github.com/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #3730a3; font-weight: bold;">GitHub</a>
-        </span>
+<div style="background-color: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">
+    <div style="display: flex; flex-direction: column; md-flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; margin-bottom: 16px;">
+        <div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px;">
+                <span style="background-color: #f8fafc; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #e2e8f0;">
+                    AI Product Operations • Quality Assurance Framework
+                </span>
+                <span style="background-color: #f5f3ff; color: #4f46e5; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #ddd6fe; white-space: nowrap;">
+                    Designed by Dhaval Kareliya | 
+                    <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #4338ca; font-weight: bold;">LinkedIn</a> • 
+                    <a href="https://github.com/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #4338ca; font-weight: bold;">GitHub</a>
+                </span>
+            </div>
+            <h1 style="color: #0f172a; font-size: 26px; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.025em;">
+                Production AI Evals &amp; Observability Controller
+            </h1>
+            <p style="color: #64748b; font-size: 14px; margin: 0; line-height: 1.5;">
+                Verify, monitor, and establish reliable release gates for LLM system performance. Define multidimensional criteria to proactively predict user retention and satisfaction.
+            </p>
+        </div>
     </div>
-    <h1 style="color: #0f172a; font-size: 26px; font-weight: 800; margin: 0 0 4px 0; tracking: -0.025em;">
-        Production AI Evals &amp; Observability Controller
-    </h1>
-    <p style="color: #64748b; font-size: 14px; margin: 0; line-height: 1.5;">
-        Verify and monitor LLM system performance. Define multi-dimensional criteria (Faithfulness, Relevancy, Hallucinations) to dynamically predict customer churn, CSAT, and system reliability.
-    </p>
 </div>
 """, unsafe_allow_html=True)
 
-# Collapsible Guide (Replaced with Custom "How to Run LLM Quality Evaluations" block)
-with st.expander("📖 Show Guide: How to Run LLM Quality Evaluations (With Examples)", expanded=True):
+# Collapsible Guide (Matching "Show Guide" trigger styling)
+with st.expander("Show Guide: How to Run LLM Quality Evaluations (With Examples)", expanded=False):
     st.markdown("""
     Product managers run these evaluations (Evals) using golden datasets to avoid deploying a model that outputs false facts or fails user queries.
     
@@ -86,14 +123,25 @@ with st.expander("📖 Show Guide: How to Run LLM Quality Evaluations (With Exam
     with g_col3:
         st.success("**Scenario C: Perfect Grounding**\nThe model correctly extracted details and complied strictly with the strict refund policy context.\n\n*Expected Evaluation: Quality >90%, Churn Risk minimized.*")
 
-# Main Content Columns (Layout proportion: 38.3% Left, 61.7% Right)
+# Main Content Columns (Layout proportion: 38% Left, 62% Right)
 col_left, col_right = st.columns([38, 62])
 
 with col_left:
-    st.subheader("Live Evaluation Playground")
+    
+    # Premium Dark Playground Card (Deep Navy Slate style to match reference)
+    st.markdown("""
+    <div style="background-color: #0f172a; padding: 24px; border-radius: 12px; border: 1px solid #1e293b; color: #f8fafc; margin-bottom: 24px;">
+        <h3 style="color: white; font-size: 16px; font-weight: 700; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Live Evaluation Playground
+        </h3>
+        <p style="color: #94a3b8; font-size: 12px; margin: 0 0 16px 0; line-height: 1.4;">
+            Select an evaluation scenario or customize the fields to test the heuristic AI Judge.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Presets Selection buttons
-    st.markdown("<p style='font-size:12px; font-weight:600; color:#475569;'>Choose a Scenario:</p>", unsafe_allow_html=True)
     p_col1, p_col2, p_col3 = st.columns(3)
     
     # Helper to load presets
@@ -114,13 +162,13 @@ with col_left:
 
     # Active dynamic coloring for button presets
     with p_col1:
-        if st.button("⚠️ Hallucinated Fact", type="primary" if st.session_state.active_preset == "hallucinated" else "secondary", use_container_width=True):
+        if st.button("⚠️ Hallucinated", type="primary" if st.session_state.active_preset == "hallucinated" else "secondary", use_container_width=True):
             load_preset("hallucinated")
     with p_col2:
-        if st.button("❌ Off-Topic Answer", type="primary" if st.session_state.active_preset == "offtopic" else "secondary", use_container_width=True):
+        if st.button("❌ Off-Topic", type="primary" if st.session_state.active_preset == "offtopic" else "secondary", use_container_width=True):
             load_preset("offtopic")
     with p_col3:
-        if st.button("✅ Perfect Compliance", type="primary" if st.session_state.active_preset == "grounded" else "secondary", use_container_width=True):
+        if st.button("✅ Grounded", type="primary" if st.session_state.active_preset == "grounded" else "secondary", use_container_width=True):
             load_preset("grounded")
 
     # Playground Inputs
@@ -273,44 +321,56 @@ projected_csat = 1.0 + (quality_score / 100.0) * 4.0
 
 # Right Analytics Workspace Panel
 with col_right:
-    # 3 High-Impact KPI Cards
+    # 3 High-Impact KPI Cards (Styled exactly as referenced style)
     kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
+    
     with kpi_col1:
-        st.metric(
-            label="Overall Quality Index",
-            value=f"{quality_score:.1f}%",
-            delta="Acceptable" if quality_score >= 80 else "Unsafe",
-            delta_color="normal" if quality_score >= 80 else "inverse"
-        )
+        st.markdown(f"""
+        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #4f46e5; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+            <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #64748b; tracking-wider">Overall Quality Index</span>
+            <span style="display: block; font-size: 28px; font-weight: 800; color: #0f172a; margin-top: 4px;">{quality_score:.1f}%</span>
+            <span style="display: block; font-size: 11px; color: {'#10b981' if quality_score >= 80 else '#ef4444'}; font-weight: 700; margin-top: 8px;">
+                {'● Acceptable' if quality_score >= 80 else '▲ Unsafe Baseline'}
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+        
     with kpi_col2:
         # Dynamic Multi-Tier Churn Severity Thresholds
         if churn_risk <= 20.0:
-            churn_delta = "Low Risk"
-            delta_color_val = "normal"
+            churn_delta = "● Low Risk"
+            churn_color = "#10b981"
         elif churn_risk <= 45.0:
-            churn_delta = "Medium Risk"
-            delta_color_val = "off"
+            churn_delta = "■ Medium Risk"
+            churn_color = "#f59e0b"
         else:
-            churn_delta = "High Churn Alert"
-            delta_color_val = "inverse"
+            churn_delta = "▲ High Churn Alert"
+            churn_color = "#ef4444"
 
-        st.metric(
-            label="Predicted Churn Risk",
-            value=f"{churn_risk:.1f}%",
-            delta=churn_delta,
-            delta_color=delta_color_val
-        )
+        st.markdown(f"""
+        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #0f172a; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+            <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #64748b; tracking-wider">Predicted Churn Risk</span>
+            <span style="display: block; font-size: 28px; font-weight: 800; color: #0f172a; margin-top: 4px;">{churn_risk:.1f}%</span>
+            <span style="display: block; font-size: 11px; color: {churn_color}; font-weight: 700; margin-top: 8px;">
+                {churn_delta}
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+        
     with kpi_col3:
-        st.metric(
-            label="Projected Customer CSAT",
-            value=f"{projected_csat:.2f} / 5.0",
-            delta="Target Met" if projected_csat >= 4.0 else "Below SLA",
-            delta_color="normal" if projected_csat >= 4.0 else "inverse"
-        )
+        st.markdown(f"""
+        <div style="background-color: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b; border-top: 4px solid #10b981; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+            <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #94a3b8; tracking-wider">Projected Customer CSAT</span>
+            <span style="display: block; font-size: 28px; font-weight: 800; color: #10b981; margin-top: 4px;">{projected_csat:.2f} / 5.0</span>
+            <span style="display: block; font-size: 11px; color: #94a3b8; font-weight: 500; margin-top: 8px;">
+                {'Target Met' if projected_csat >= 4.0 else 'Below SLA'}
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Plotly Timeline Chart
+    # Plotly Timeline Chart (Enhanced styling matching the pareto container)
     st.subheader("Quality Baseline Timeline")
     baseline_runs = [55.0, 58.5, 62.0, 71.5, 76.0]
     runs = baseline_runs + [quality_score]
@@ -322,7 +382,7 @@ with col_right:
         x=x_runs, y=[80]*6,
         mode="lines",
         name="Target Threshold (80%)",
-        line=dict(color="red", dash="dash", width=1.5)
+        line=dict(color="#f43f5e", dash="dash", width=1.5)
     ))
     # Active timeline curve
     fig.add_trace(go.Scatter(
@@ -334,30 +394,34 @@ with col_right:
     ))
     fig.update_layout(
         yaxis_range=[0, 100],
-        margin=dict(l=10, r=10, t=10, b=10),
+        margin=dict(l=20, r=20, t=10, b=10),
         height=220,
-        paper_bgcolor="#f8fafc",
-        plot_bgcolor="#f8fafc",
+        paper_bgcolor="white",
+        plot_bgcolor="white",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
+    
+    # Render inside a clean card container to match screenshot layout
+    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
     st.plotly_chart(fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Industry Standards Info Cards
     st.markdown("""
-    <div style="background-color: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 24px;">
-        <span style="font-size: 11px; font-weight: bold; background-color: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">
+    <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">
+        <span style="font-size: 11px; font-weight: bold; background-color: #f5f3ff; color: #4f46e5; padding: 4px 12px; border-radius: 6px; text-transform: uppercase; border: 1px solid #ddd6fe;">
             Ragas &amp; DeepEval Framework Compliance
         </span>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px;">
           <div>
-            <p style="text-size: 13px; font-weight: 700; color: #1e293b; margin: 0;">Ragas Framework: Faithfulness</p>
-            <p style="font-size: 11px; color: #64748b; margin: 4px 0 0 0; line-height: 1.4;">
+            <p style="font-size: 13px; font-weight: 700; color: #0f172a; margin: 0;">Ragas Framework: Faithfulness</p>
+            <p style="font-size: 11px; color: #64748b; margin: 4px 0 0 0; line-height: 1.5;">
                 Utilized to ensure information is strictly grounded. Ragas extracts key factual statements from the generated answer and queries an LLM Judge to check if each statement is explicitly backed by the retrieved context papers.
             </p>
           </div>
           <div>
-            <p style="text-size: 13px; font-weight: 700; color: #1e293b; margin: 0;">DeepEval: Relevancy &amp; Hallucinations</p>
-            <p style="font-size: 11px; color: #64748b; margin: 4px 0 0 0; line-height: 1.4;">
+            <p style="font-size: 13px; font-weight: 700; color: #0f172a; margin: 0;">DeepEval: Relevancy &amp; Hallucinations</p>
+            <p style="font-size: 11px; color: #64748b; margin: 4px 0 0 0; line-height: 1.5;">
                 Maintains output quality. DeepEval maps the cosine similarity between generated responses and initial prompt intents to compute answer relevancy, and cross-references source contradictions to output a strict hallucination percentage.
             </p>
           </div>
@@ -365,7 +429,7 @@ with col_right:
     </div>
     """, unsafe_allow_html=True)
 
-    # Automated release briefing memo
+    # Automated release briefing memo (Premium container layout)
     st.subheader("System Quality Release Briefing")
     memo = f"""### 💼 PRODUCT OPERATIONS & LLM EVALUATION BRIEF
 Generated: {datetime.now().strftime('%B %d, %Y')}
@@ -394,3 +458,18 @@ DECISION ROADMAP:
         memo += f"- **Recommendation: CONDITIONAL ROLLOUT (MONITOR CLOSELY).** System performance is borderline acceptable. Latency and grounding indicators should be watched with an automated anomaly triage workflow."
 
     st.code(memo, language="markdown")
+
+# Premium Minimalist Footer Panel (Aligned cleanly matching reference)
+st.markdown("""
+<div style="border-top: 1px solid #e2e8f0; margin-top: 48px; padding-top: 24px; padding-bottom: 24px;">
+    <div style="max-w-[1600px] mx-auto flex flex-col sm:flex-row justify-between align-items: center; gap: 12px; font-size: 12px; color: #64748b;">
+        <div>
+            &copy; 2026 Dhaval Kareliya. All rights reserved.
+        </div>
+        <div style="display: flex; gap: 24px; font-weight: 600;">
+            <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">LinkedIn</a>
+            <a href="https://github.com/YOUR_USERNAME" target="_blank" style="text-decoration: none; color: #475569; transition: color 0.2s;">GitHub</a>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
