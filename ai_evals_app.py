@@ -11,27 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Initialize Session States for Playground Presets & Expander Toggles
-if 'show_guide' not in st.session_state:
-    st.session_state.show_guide = True  # Default open for onboarding, toggleable via header button
-if 'play_context' not in st.session_state:
-    st.session_state.play_context = "The school science lab allows students to reserve a microscope workstation for 45 minutes. Safety goggles must be worn at all times, and there is no reservation fee."
-if 'play_query' not in st.session_state:
-    st.session_state.play_query = "How long can I reserve a workstation, and is there a reservation fee?"
-if 'play_output' not in st.session_state:
-    st.session_state.play_output = "You can reserve a workstation for 10 minutes and there is a 5 dollar booking fee."
-if 'active_preset' not in st.session_state:
-    st.session_state.active_preset = "hallucinated"
-
-# Default Baseline Sliders
-if 'faithfulness' not in st.session_state:
-    st.session_state.faithfulness = 10
-if 'relevancy' not in st.session_state:
-    st.session_state.relevancy = 85
-if 'hallucination' not in st.session_state:
-    st.session_state.hallucination = 70
-
-# Custom Premium CSS Injection for professional blue branding & contrast fixes
+# Custom Premium CSS Injection for professional light-blue branding & contrast fixes
 st.markdown("""
 <style>
   /* Page Padding Spacing Expansion */
@@ -39,12 +19,29 @@ st.markdown("""
     padding-left: 6% !important;
     padding-right: 6% !important;
     max-width: 95% !important;
+    background-color: #f8fafc;
+  }
+
+  /* Global background overrides for Streamlit container elements */
+  .stApp {
+    background-color: #f8fafc;
+  }
+
+  /* Custom White Card Wrappers */
+  .custom-card {
+    background-color: #ffffff !important;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
   }
 
   /* Force highly legible text colors on all native Streamlit widgets */
   div[data-testid="stTextArea"] textarea, div[data-testid="stTextInput"] input {
     color: #0f172a !important;
     background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
   }
   div[data-testid="stTextArea"] label p, div[data-testid="stTextInput"] label p {
     color: #0f172a !important;
@@ -58,7 +55,7 @@ st.markdown("""
     border-radius: 12px !important;
   }
   div[data-testid="stExpander"] div[role="button"] p {
-    color: #1e3a8a !important; /* Premium deep blue */
+    color: #1e40af !important; /* Premium deep blue */
     font-weight: 700 !important;
     font-size: 15px !important;
   }
@@ -67,6 +64,16 @@ st.markdown("""
     background-color: #ffffff !important;
     border-radius: 8px;
     padding: 16px;
+  }
+
+  /* Force Slider Label and Value Legibility */
+  div[data-testid="stSlider"] label p {
+    color: #1e293b !important;
+    font-weight: 600 !important;
+  }
+  div[data-testid="stSlider"] div[data-testid="stWidgetValue"] {
+    color: #2563eb !important;
+    font-weight: 700 !important;
   }
 
   /* Slider Blue Accents */
@@ -101,24 +108,44 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Initialize Session States for Playground Presets & Expander Toggles
+if 'show_guide' not in st.session_state:
+    st.session_state.show_guide = True  # Default open for onboarding, toggleable via header button
+if 'play_context' not in st.session_state:
+    st.session_state.play_context = "The school science lab allows students to reserve a microscope workstation for 45 minutes. Safety goggles must be worn at all times, and there is no reservation fee."
+if 'play_query' not in st.session_state:
+    st.session_state.play_query = "How long can I reserve a workstation, and is there a reservation fee?"
+if 'play_output' not in st.session_state:
+    st.session_state.play_output = "You can reserve a workstation for 10 minutes and there is a 5 dollar booking fee."
+if 'active_preset' not in st.session_state:
+    st.session_state.active_preset = "hallucinated"
+
+# Default Baseline Sliders
+if 'faithfulness' not in st.session_state:
+    st.session_state.faithfulness = 10
+if 'relevancy' not in st.session_state:
+    st.session_state.relevancy = 85
+if 'hallucination' not in st.session_state:
+    st.session_state.hallucination = 70
+
 # Widescreen Executive Header Panel (Col proportion: Title vs Actions Menu)
 col_title, col_actions = st.columns([6, 4])
 
 with col_title:
     st.markdown("""
-    <div style="background-color: white; padding: 12px 12px 12px 0px; border-radius: 12px; margin-bottom: 8px;">
+    <div style="background-color: transparent; padding: 12px 12px 12px 0px; border-radius: 12px; margin-bottom: 8px;">
         <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px;">
-            <span style="background-color: #f8fafc; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #e2e8f0;">
+            <span style="background-color: #ffffff; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">
                 AI Product Operations • Quality Assurance Framework
             </span>
             <span style="background-color: #f5f3ff; color: #4f46e5; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; border: 1px solid #ddd6fe; white-space: nowrap;">
                 Designed by Dhaval Kareliya
             </span>
         </div>
-        <h1 style="color: #0f172a; font-size: 26px; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.025em;">
+        <h1 style="color: #0f172a; font-size: 28px; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.025em;">
             Production AI Evals &amp; Observability Controller
         </h1>
-        <p style="color: #64748b; font-size: 14px; margin: 0; line-height: 1.5;">
+        <p style="color: #475569; font-size: 14.5px; margin: 0; line-height: 1.5; font-weight: 500;">
             Verify, monitor, and establish reliable release gates for LLM system performance. Define multidimensional criteria to proactively predict user retention and satisfaction.
         </p>
     </div>
@@ -170,25 +197,25 @@ with st.expander("Show Guide: How to Run LLM Quality Evaluations (With Examples)
     
     g_col1, g_col2, g_col3 = st.columns(3)
     with g_col1:
-        st.info("**Scenario A: Hallucinated Fact**\nThe model promised a '10-day return policy' when the source context states 'no refund policy'.\n\n*Expected Evaluation: Low Faithfulness (~60%), High Hallucination Rate (~45%)*")
+        st.info("**Scenario A: Hallucinated Fact**\nThe model promised a '10-day return policy' when the source context states 'no refund policy'.\n\n*Expected Evaluation: Low Faithfulness (~10%), High Hallucination Rate (~70%)*")
     with g_col2:
         st.warning("**Scenario B: Off-Topic Answer**\nThe model ignored the pricing question and began advertising shoe deals instead.\n\n*Expected Evaluation: Relevancy ~30%, CSAT decreases severely.*")
     with g_col3:
-        st.success("**Scenario C: Perfect Grounding**\nThe model correctly extracted details and complied strictly with the strict refund policy context.\n\n*Expected Evaluation: Quality >90%, Churn Risk minimized.*")
+        st.success("**Scenario C: Perfect Grounding**\nThe model correctly extracted details and complied strictly with the strict refund policy context.\n\n*Expected Evaluation: Quality >95%, Churn Risk minimized.*")
 
 # Main Content Columns (Layout proportion with explicit spacer column for elegant separation)
 col_left, col_spacer, col_right = st.columns([36, 6, 58])
 
 with col_left:
     
-    # Premium Dark Blue Playground Card (Color tweaked to eliminate high contrast clashes)
+    # Premium Light Blue Playground Card Header (Color matched to keep light theme cohesive)
     st.markdown("""
-    <div style="background-color: #1e3a8a; padding: 24px; border-radius: 12px; border: 1px solid #1d4ed8; color: #f8fafc; margin-bottom: 24px;">
-        <h3 style="color: white; font-size: 16px; font-weight: 700; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
+    <div style="background-color: #eff6ff; padding: 20px; border-radius: 12px; border: 1px solid #bfdbfe; color: #1e3a8a; margin-bottom: 20px;">
+        <h3 style="color: #1e40af; font-size: 16px; font-weight: 700; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
             <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             Live Evaluation Playground
         </h3>
-        <p style="color: #bfdbfe; font-size: 12px; margin: 0 0 16px 0; line-height: 1.4;">
+        <p style="color: #2563eb; font-size: 12.5px; margin: 0; line-height: 1.4; font-weight: 500;">
             Select an evaluation scenario or customize the fields to test the heuristic AI Judge.
         </p>
     </div>
@@ -224,12 +251,12 @@ with col_left:
         if st.button("✅ Grounded", type="primary" if st.session_state.active_preset == "grounded" else "secondary", use_container_width=True):
             load_preset("grounded")
 
-    # Playground Inputs
+    # Playground Inputs (Explicit white containers)
     text_context = st.text_area("Grounded Source Context", value=st.session_state.play_context, height=90)
     text_query = st.text_input("User Question", value=st.session_state.play_query)
     text_output = st.text_area("Generated Output Response", value=st.session_state.play_output, height=90)
 
-    # Simulation Evaluation Trigger (The Blue Button)
+    # Simulation Evaluation Trigger (Premium Royal Blue Button)
     if st.button("Run AI-Judge Evaluation Simulation", type="primary", use_container_width=True):
         c = text_context.lower().strip()
         q = text_query.lower().strip()
@@ -315,7 +342,7 @@ with col_left:
 
     st.markdown("---")
 
-    # Section 1: Sliders Calibration
+    # Section 1: Sliders Calibration (Clean Light Label Styling)
     st.subheader("1. System Metric Calibration")
     
     slide_faithfulness = st.slider(
@@ -374,12 +401,12 @@ projected_csat = 1.0 + (quality_score / 100.0) * 4.0
 
 # Right Analytics Workspace Panel
 with col_right:
-    # 3 High-Impact KPI Cards (Styled exactly as referenced style)
+    # 3 High-Impact KPI Cards (Clean high-contrast Light Theme + Dark highlight combo)
     kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
     
     with kpi_col1:
         st.markdown(f"""
-        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #2563eb; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #2563eb; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
             <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #64748b; tracking-wider">Overall Quality Index</span>
             <span style="display: block; font-size: 28px; font-weight: 800; color: #0f172a; margin-top: 4px;">{quality_score:.1f}%</span>
             <span style="display: block; font-size: 11px; color: {'#10b981' if quality_score >= 80 else '#ef4444'}; font-weight: 700; margin-top: 8px;">
@@ -401,7 +428,7 @@ with col_right:
             churn_color = "#ef4444"
 
         st.markdown(f"""
-        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #1e293b; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+        <div style="background-color: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; border-top: 4px solid #1e293b; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
             <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #64748b; tracking-wider">Predicted Churn Risk</span>
             <span style="display: block; font-size: 28px; font-weight: 800; color: #0f172a; margin-top: 4px;">{churn_risk:.1f}%</span>
             <span style="display: block; font-size: 11px; color: {churn_color}; font-weight: 700; margin-top: 8px;">
@@ -411,11 +438,12 @@ with col_right:
         """, unsafe_allow_html=True)
         
     with kpi_col3:
+        # Dark card with high-contrast emerald text for the premium monetization goal
         st.markdown(f"""
-        <div style="background-color: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b; border-top: 4px solid #10b981; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+        <div style="background-color: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b; border-top: 4px solid #10b981; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
             <span style="display: block; text-transform: uppercase; font-size: 11px; font-weight: 700; color: #94a3b8; tracking-wider">Projected Customer CSAT</span>
             <span style="display: block; font-size: 28px; font-weight: 800; color: #10b981; margin-top: 4px;">{projected_csat:.2f} / 5.0</span>
-            <span style="display: block; font-size: 11px; color: #94a3b8; font-weight: 500; margin-top: 8px;">
+            <span style="display: block; font-size: 11px; color: #cbd5e1; font-weight: 500; margin-top: 8px;">
                 {'Target Met' if projected_csat >= 4.0 else 'Below SLA'}
             </span>
         </div>
@@ -482,7 +510,7 @@ with col_right:
     </div>
     """, unsafe_allow_html=True)
 
-    # Automated release briefing memo (Premium container layout)
+    # Automated release briefing memo (Premium dark terminal container layout for contrast & style)
     st.subheader("System Quality Release Briefing")
     memo = f"""### 💼 PRODUCT OPERATIONS & LLM EVALUATION BRIEF
 Generated: {datetime.now().strftime('%B %d, %Y')}
