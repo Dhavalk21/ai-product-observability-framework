@@ -13,7 +13,7 @@ The application provides an interactive workspace split into a continuous valida
 3. **Weight Calibration:** Product managers calibrate individual metric weights depending on application priorities (e.g., penalizing hallucinations heavily for financial/legal bots vs. prioritizing high relevancy for creative tools).
 4. **Impact Prediction:** The mathematical engine converts raw quality metrics into business-level insights: an Overall Quality Index, Churn Risk projections, and simulated 5-star CSAT metrics alongside an automated technical Release Briefing.
 
-## 🛠️ Frameworks & Metrics Used
+## 🛠️ Frameworks & Metrics
 
 This tool simulates and adheres to metrics popularized by leading automated LLM evaluation frameworks:
 
